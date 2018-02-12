@@ -8,21 +8,21 @@ public class DemoData implements IData {
 		int id;
 		String name;
 		int amount;
-		
+
 		Ingredient(int id, String name, int amount) {
 			this.id = id;
 			this.name = name;
 			this.amount = amount;
 		}
-		
+
 		public String toString() {
 			return "Ingredient: " + id + "; " + name + " - Amount: " + amount;
 		}
 	}
-	
+
 	private List<Ingredient> ingredients;
-	
-	public DemoData( ) {
+
+	public DemoData() {
 		ingredients = new ArrayList<>();
 		ingredients.add(new Ingredient(1, "flormelis", 60));
 		ingredients.add(new Ingredient(2, "mel", 240));
@@ -32,7 +32,7 @@ public class DemoData implements IData {
 	@Override
 	public List<String> getAllIngredients() {
 		List<String> allIngredients = new ArrayList<String>();
-		for(int i = 0; i < ingredients.size(); i++) {
+		for (int i = 0; i < ingredients.size(); i++) {
 			String ingredient = ingredients.get(i).name;
 			allIngredients.add(ingredient);
 		}
@@ -40,30 +40,55 @@ public class DemoData implements IData {
 	}
 
 	@Override
-	public String getIngredientName(int id) {
-		return ingredients.get(id-1).name;
+	public String getIngredientName(int id) throws IngredientNotFoundException {
+		for (Ingredient i : ingredients) {
+			if (i.id == id)
+				return i.name;
+		}
+		throw new IngredientNotFoundException();
 	}
 
 	@Override
-	public int getIngredientAmount(int id) {
-		return ingredients.get(id-1).amount;
+	public int getIngredientAmount(int id) throws IngredientNotFoundException {
+		for (Ingredient i : ingredients) {
+			if (i.id == id)
+				return i.amount;
+		}
+		throw new IngredientNotFoundException();
 	}
 
 	@Override
-	public void setIngredientName(int id, String name) {
-		ingredients.get(id-1).name = name;
-		
+	public void setIngredientName(int id, String name) throws IngredientNotFoundException {
+		boolean found = false;
+		for (Ingredient i : ingredients) {
+			if (i.id == id) {
+				i.name = name;
+				found = true;
+				break;
+			}
+		}
+		if(!found) {			
+			throw new IngredientNotFoundException();
+		}
 	}
 
 	@Override
-	public void setIngredientAmount(int id, int amount) {
-		ingredients.get(id-1).amount = amount;
-		
+	public void setIngredientAmount(int id, int amount) throws IngredientNotFoundException {
+		boolean found = false;
+		for (Ingredient i : ingredients) {
+			if (i.id == id) {
+				i.amount = amount;
+				found = true;
+			}
+		}
+		if(!found) {			
+			throw new IngredientNotFoundException();
+		}
 	}
 
 	@Override
 	public void createIngredient(int id, String name, int amount) {
 		ingredients.add(new Ingredient(id, name, amount));
-		
+
 	}
 }

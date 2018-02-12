@@ -8,13 +8,13 @@ public class Funktionalitet implements IFunktionalitet{
 	}
 	
 	@Override
-	public double getBMI(String cpr) {
+	public double getBMI(String cpr) throws DataException {
 		double bmi = (d.getWeight(cpr))/(Math.pow(2, d.getHeight(cpr)));
 		return bmi;
 	}
 
 	@Override
-	public String getTextualBMI(String cpr) {
+	public String getTextualBMI(String cpr) throws DataException {
 		if(getBMI(cpr) < 18.5) {
 			return "Du vejer for lidt";
 		} else if(getBMI(cpr) >= 18.5 || getBMI(cpr) < 25) {
@@ -27,7 +27,7 @@ public class Funktionalitet implements IFunktionalitet{
 	}
 
 	@Override
-	public String getNavn(String cpr) {
+	public String getNavn(String cpr) throws DataException {
 		return d.getName(cpr);
 	}
 

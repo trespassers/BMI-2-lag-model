@@ -11,10 +11,14 @@ public class TUI {
 	}
 	
 	public void calcBMI() {
-		System.out.print("Enter your CPR: ");
-		String cpr = sc.next();
-		sc.close();
-		System.out.println(f.getBMI(cpr));
-	}
-	
+		try {
+			System.out.print("Enter your CPR: ");
+			String cpr = sc.next();
+			sc.close();
+			System.out.println(f.getBMI(cpr));
+		} catch (DataException e) {
+			System.out.println(e);
+			
+		}
+	}	
 }

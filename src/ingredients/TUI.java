@@ -47,8 +47,13 @@ public class TUI implements IUI {
 
 	@Override
 	public void showIngredient() {
+		System.out.println("Enter the id of the ingredient\nthat you would like to see");
 		int id = sc.nextInt();
-		System.out.println(d.getIngredientName(id));
+		try {
+			System.out.println(d.getIngredientName(id));
+		} catch (IngredientNotFoundException e) {
+			System.out.println(e);
+		}
 	}
 
 	@Override
@@ -59,13 +64,21 @@ public class TUI implements IUI {
 		System.out.println("OK - Enter the id of the ingredient to change");
 		int id = sc.nextInt();
 		if(choice == 1) {
-			System.out.print("Write new name ");
-			String name = sc.next();
-			d.setIngredientName(id, name);
+			try {
+				System.out.print("Write new name ");
+				String name = sc.next();
+				d.setIngredientName(id, name);
+			} catch (IngredientNotFoundException e) {
+				System.out.println(e);
+			}
 		} else {
-			System.out.print("Write new amount ");
-			int amount = sc.nextInt();
-			d.setIngredientAmount(id, amount);
+			try {
+				System.out.print("Write new amount ");
+				int amount = sc.nextInt();
+				d.setIngredientAmount(id, amount);
+			} catch (IngredientNotFoundException e) {
+				System.out.println(e);
+			}
 		}
 	}
 
